@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample-configs
+data:
+  default_ttl: "30"
+  say_hello: "Welcome to my Service"
+
+  sample-nginx.conf: |
+    server {
+      listen            80;
+      index             index.html;
+      server_name       cloudacode.com;
+
+      location / {
+        root  /cloudacode/static/
+      }
+
+      location /api {
+        proxy_pass  https://api.cloudacode.internal
+      }
