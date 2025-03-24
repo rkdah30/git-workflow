@@ -1,4 +1,9 @@
 services:
+
+ depends_on:
+      - mysql 
+      - wordpress
+mysql:
   db:
     # We use a mariadb image which supports both amd64 & arm64 architecture
     image: mariadb:10.6.4-focal
@@ -8,14 +13,10 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=somewordpress
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=wordpress
     expose:
       - 3306
       - 33060
+wordpress:
   wordpress:
     image: wordpress:latest
     volumes:
@@ -23,11 +24,6 @@ services:
     ports:
       - 8000:80
     restart: always
-    environment:
-      - WORDPRESS_DB_HOST=db
-      - WORDPRESS_DB_USER=wordpress
-      - WORDPRESS_DB_PASSWORD=wordpress
-      - WORDPRESS_DB_NAME=wordpress
 volumes:
   db_data:
   wp_data:
