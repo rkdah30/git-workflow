@@ -16,6 +16,11 @@ mysql:
     expose:
       - 3306
       - 33060
+      healthcheck:
+      interval: 5s
+      timeout: 1s
+      retries: 2
+      start_period: 5s
 wordpress:
   wordpress:
     image: wordpress:latest
